@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>Borrar Inmueble</h2>
+  <p>¿Estás seguro de que deseas borrar el inmueble "{{ propiedad.direccion }}"?</p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Sí, Borrar</button>
+  </form>
+  <a href="{% url 'lista_propiedades' %}">Cancelar</a>
+{% endblock %}

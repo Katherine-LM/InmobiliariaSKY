@@ -4,7 +4,11 @@
   <h2>Lista de Propiedades</h2>
   <ul>
     {% for propiedad in propiedades %}
-      <li>{{ propiedad.direccion }} - {{ propiedad.ciudad }} - {{ propiedad.precio }}</li>
+      <li>
+        {{ propiedad.direccion }} - {{ propiedad.ciudad }} - {{ propiedad.precio }}
+        <a href="{% url 'editar_inmueble' propiedad.pk %}">Editar</a>
+        <a href="{% url 'borrar_inmueble' propiedad.pk %}">Borrar</a>
+      </li>
     {% empty %}
       <li>No hay propiedades disponibles.</li>
     {% endfor %}

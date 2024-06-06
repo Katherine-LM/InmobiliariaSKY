@@ -3,5 +3,15 @@
 {% block content %}
   <h2>Bienvenido a la Inmobiliaria</h2>
   <p>Encuentra las mejores propiedades para arrendar.</p>
-  <a href="{% url 'lista_propiedades' %}">Ver Propiedades</a>
+  <p><a href="{% url 'lista_propiedades' %}">Ver Propiedades</a></p>
+
+  <div>
+    {% if user.is_authenticated %}
+      <h3>Administrar Propiedades</h3>
+      <a href="{% url 'nuevo_inmueble' %}" class="button">Agregar Inmueble</a>
+      <a href="{% url 'lista_propiedades' %}" class="button">Editar/Borrar Inmuebles</a>
+    {% else %}
+      <p>Por favor, <a href="{% url 'login' %}">inicia sesión</a> para administrar propiedades.</p>
+    {% endif %}
+  </div>
 {% endblock %}
