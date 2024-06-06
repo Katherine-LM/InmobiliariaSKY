@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>Lista de Propiedades</h2>
+  <ul>
+    {% for propiedad in propiedades %}
+      <li>{{ propiedad.direccion }} - {{ propiedad.ciudad }} - {{ propiedad.precio }}</li>
+    {% empty %}
+      <li>No hay propiedades disponibles.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

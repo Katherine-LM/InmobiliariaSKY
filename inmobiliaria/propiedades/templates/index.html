@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inmobiliaria SKY</title>
-</head>
-<body>
-    <h1>Bienvenido a Inmobiliaria SKY</h1>
-    <p>Esta es la página de inicio.</p>
-</body>
-</html>
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>Bienvenido a la Inmobiliaria</h2>
+  <p>Encuentra las mejores propiedades para arrendar.</p>
+  <a href="{% url 'lista_propiedades' %}">Ver Propiedades</a>
+{% endblock %}
