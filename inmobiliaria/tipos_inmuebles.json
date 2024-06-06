@@ -1,0 +1,16 @@
+[
+    {
+        "model": "propiedades.tipoinmueble",
+        "pk": 1,
+        "fields": {
+            "nombre": "Departamento"
+        }
+    },
+    {
+        "model": "propiedades.tipoinmueble",
+        "pk": 2,
+        "fields": {
+            "nombre": "Casa"
+        }
+    }
+]

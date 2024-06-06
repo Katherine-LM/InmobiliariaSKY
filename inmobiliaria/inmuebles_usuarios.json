@@ -1,0 +1,100 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "username": "john_doe",
+            "password": "pbkdf2_sha256$260000$abcdefg$hijklmnopqrstuvwxyz1234567890abcdefg",
+            "email": "john.doe@example.com",
+            "first_name": "John",
+            "last_name": "Doe",
+            "is_superuser": false,
+            "is_staff": true,
+            "is_active": true
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "username": "jane_smith",
+            "password": "pbkdf2_sha256$260000$abcdefg$hijklmnopqrstuvwxyz1234567890abcdefg",
+            "email": "jane.smith@example.com",
+            "first_name": "Jane",
+            "last_name": "Smith",
+            "is_superuser": false,
+            "is_staff": true,
+            "is_active": true
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "username": "admin",
+            "password": "pbkdf2_sha256$260000$abcdefg$hijklmnopqrstuvwxyz1234567890abcdefg",
+            "email": "admin@example.com",
+            "first_name": "Admin",
+            "last_name": "User",
+            "is_superuser": true,
+            "is_staff": true,
+            "is_active": true
+        }
+    },
+    {
+        "model": "propiedades.inmueble",
+        "pk": 1,
+        "fields": {
+            "nombre": "Casa en Arriendo en Las Condes",
+            "descripcion": "Una hermosa casa en el exclusivo barrio de Las Condes, con 3 dormitorios y 2 baños.",
+            "direccion": "Avenida Las Condes 1234",
+            "precio": 1200000,
+            "disponible": true,
+            "tipo_inmueble": 1,
+            "comuna": 45,
+            "usuario": 1
+        }
+    },
+    {
+        "model": "propiedades.inmueble",
+        "pk": 2,
+        "fields": {
+            "nombre": "Departamento en Arriendo en Providencia",
+            "descripcion": "Un cómodo departamento en el corazón de Providencia, cerca de centros comerciales y estaciones de metro.",
+            "direccion": "Calle Providencia 5678",
+            "precio": 800000,
+            "disponible": true,
+            "tipo_inmueble": 2,
+            "comuna": 316,
+            "usuario": 2
+        }
+    },
+    {
+        "model": "propiedades.inmueble",
+        "pk": 3,
+        "fields": {
+            "nombre": "Oficina en Arriendo en Santiago Centro",
+            "descripcion": "Oficina moderna y equipada en pleno centro de Santiago, ideal para empresas pequeñas.",
+            "direccion": "Calle Moneda 123",
+            "precio": 1500000,
+            "disponible": true,
+            "tipo_inmueble": 3,
+            "comuna": 322,
+            "usuario": 3
+        }
+    },
+    {
+        "model": "propiedades.inmueble",
+        "pk": 4,
+        "fields": {
+            "nombre": "Local Comercial en Arriendo en Ñuñoa",
+            "descripcion": "Local comercial amplio y bien ubicado en Ñuñoa, ideal para comercio minorista.",
+            "direccion": "Calle Ñuñoa 456",
+            "precio": 1800000,
+            "disponible": true,
+            "tipo_inmueble": 4,
+            "comuna": 313,
+            "usuario": 1
+        }
+    }
+]
