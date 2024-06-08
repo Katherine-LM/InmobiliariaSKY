@@ -1,17 +1,90 @@
-{% extends "base_generic.html" %}
-
-{% block content %}
-  <h2>Bienvenido a la Inmobiliaria</h2>
-  <p>Encuentra las mejores propiedades para arrendar.</p>
-  <p><a href="{% url 'lista_propiedades' %}">Ver Propiedades</a></p>
-
-  <div>
-    {% if user.is_authenticated %}
-      <h3>Administrar Propiedades</h3>
-      <a href="{% url 'nuevo_inmueble' %}" class="button">Agregar Inmueble</a>
-      <a href="{% url 'lista_propiedades' %}" class="button">Editar/Borrar Inmuebles</a>
-    {% else %}
-      <p>Por favor, <a href="{% url 'login' %}">inicia sesión</a> para administrar propiedades.</p>
-    {% endif %}
-  </div>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}Mi Sitio{% endblock %}</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .navbar-brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .jumbotron {
+      background: #f8f9fa;
+      padding: 2rem 1rem;
+    }
+    .jumbotron h1 {
+      font-size: 2.5rem;
+    }
+    .btn-custom {
+      background-color: #007bff;
+      color: white;
+    }
+    .btn-custom:hover {
+      background-color: #0056b3;
+    }
+    footer {
+      background-color: #f8f9fa;
+      padding: 1rem 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Inmobiliaria</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'lista_propiedades' %}">Ver Propiedades</a></li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'perfil' %}">Mi perfil</a></li>
+            <li class="nav-item">
+              <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-link nav-link">Cerrar Sesión</button>
+              </form>
+            </li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'registro' %}">Registro</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main class="container mt-4">
+    <div class="jumbotron text-center">
+      <h1 class="display-4">Bienvenido a la Inmobiliaria</h1>
+      <p class="lead">Encuentra las mejores propiedades para arrendar.</p>
+      <hr class="my-4">
+      <p class="lead">
+        <a class="btn btn-primary btn-lg" href="{% url 'lista_propiedades' %}" role="button">Ver Propiedades</a>
+        {% if not user.is_authenticated %}
+          <a class="btn btn-secondary btn-lg" href="{% url 'login' %}" role="button">Iniciar Sesión</a>
+        {% endif %}
+      </p>
+      {% if user.is_authenticated %}
+        <p class="lead mt-3">
+          <a class="btn btn-custom btn-lg" href="{% url 'nuevo_inmueble' %}" role="button">Agregar Propiedad</a>
+        </p>
+      {% else %}
+        <p>Por favor, <a href="{% url 'login' %}">inicia sesión</a> para administrar propiedades.</p>
+      {% endif %}
+    </div>
+  </main>
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 Inmobiliaria. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

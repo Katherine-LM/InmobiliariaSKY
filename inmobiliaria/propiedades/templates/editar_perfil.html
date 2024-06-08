@@ -1,10 +1,13 @@
 {% extends "base_generic.html" %}
 
+
+{% block title %}Editar Inmueble{% endblock %}
+
 {% block content %}
-  <h2>Editar Perfil</h2>
-  <form method="post">
+  <h1>Editar Inmueble</h1>
+  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Guardar Cambios</button>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
   </form>
 {% endblock %}

@@ -1,16 +1,53 @@
-{% extends "base_generic.html" %}
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block title %}Lista de Propiedades{% endblock %}
 
 {% block content %}
-  <h2>Lista de Propiedades</h2>
-  <ul>
+<h2>Lista de Propiedades</h2>
+<form method="GET" class="form-inline mb-4">
+    <div class="form-group mr-2">
+        <label for="region">Regiones:</label>
+        <select name="region" id="region" class="form-control ml-2">
+            <option value="0">Todas</option>
+            {% for region in regiones %}
+            <option value="{{ region.id }}">{{ region.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group mr-2">
+        <label for="comuna">Comunas:</label>
+        <select name="comuna" id="comuna" class="form-control ml-2">
+            <option value="0">Todas</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+</form>
+
+<div class="row">
     {% for propiedad in propiedades %}
-      <li>
-        {{ propiedad.direccion }} - {{ propiedad.ciudad }} - {{ propiedad.precio }}
-        <a href="{% url 'editar_inmueble' propiedad.pk %}">Editar</a>
-        <a href="{% url 'borrar_inmueble' propiedad.pk %}">Borrar</a>
-      </li>
-    {% empty %}
-      <li>No hay propiedades disponibles.</li>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            {% if propiedad.imagen %}
+            <img src="{{ propiedad.imagen.url }}" class="card-img-top" alt="Imagen de la propiedad">
+            {% else %}
+            <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Imagen de la propiedad">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ propiedad.direccion }}</h5>
+                <p class="card-text">
+                    <strong>Región:</strong> {{ propiedad.region.nombre }}<br>
+                    <strong>Comuna:</strong> {{ propiedad.comuna.nombre }}<br>
+                    <strong>Precio:</strong> {{ propiedad.precio }}<br>
+                    <strong>Disponible:</strong> {{ propiedad.disponible }}
+                </p>
+                {% if user.is_authenticated %}
+                <a href="{% url 'editar_inmueble' propiedad.id %}" class="btn btn-warning">Editar</a>
+                <a href="{% url 'borrar_inmueble' propiedad.id %}" class="btn btn-danger">Borrar</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
     {% endfor %}
-  </ul>
+</div>
 {% endblock %}

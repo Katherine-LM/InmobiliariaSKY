@@ -1,10 +1,24 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h2>Perfil</h2>
-  <p>Nombre de usuario: {{ user.username }}</p>
-  <p>Email: {{ user.email }}</p>
-  <p>Nombre: {{ user.first_name }}</p>
-  <p>Apellido: {{ user.last_name }}</p>
-  <a href="{% url 'editar_perfil' %}">Editar Perfil</a>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header text-center">
+          <h2>Perfil</h2>
+        </div>
+        <div class="card-body">
+          <p><strong>Nombre de usuario:</strong> {{ user.username }}</p>
+          <p><strong>Email:</strong> {{ user.email }}</p>
+          <p><strong>Nombre:</strong> {{ user.first_name }}</p>
+          <p><strong>Apellido:</strong> {{ user.last_name }}</p>
+        </div>
+        <div class="card-footer text-center">
+          <a href="{% url 'editar_perfil' %}" class="btn btn-primary">Editar Perfil</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -1,11 +1,17 @@
-{% extends "base_generic.html" %}
+{% load static %}
 
-{% block content %}
-  <h2>Editar Inmueble</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Guardar Cambios</button>
-  </form>
-  <a href="{% url 'lista_propiedades' %}">Volver a la lista</a>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Inmueble</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>Editar Inmueble</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+</body>
+</html>
