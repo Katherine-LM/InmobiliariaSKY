@@ -4,50 +4,206 @@
 {% block title %}Lista de Propiedades{% endblock %}
 
 {% block content %}
-<h2>Lista de Propiedades</h2>
-<form method="GET" class="form-inline mb-4">
-    <div class="form-group mr-2">
-        <label for="region">Regiones:</label>
-        <select name="region" id="region" class="form-control ml-2">
-            <option value="0">Todas</option>
-            {% for region in regiones %}
-            <option value="{{ region.id }}">{{ region.nombre }}</option>
-            {% endfor %}
-        </select>
-    </div>
-    <div class="form-group mr-2">
-        <label for="comuna">Comunas:</label>
-        <select name="comuna" id="comuna" class="form-control ml-2">
-            <option value="0">Todas</option>
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Filtrar</button>
-</form>
+<style>
+  /* Fondo celeste */
+  body {
+    background-color: #E6F7F1;
+  }
 
-<div class="row">
-    {% for propiedad in propiedades %}
-    <div class="col-md-4">
-        <div class="card mb-4">
-            {% if propiedad.imagen %}
-            <img src="{{ propiedad.imagen.url }}" class="card-img-top" alt="Imagen de la propiedad">
-            {% else %}
-            <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Imagen de la propiedad">
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-title">{{ propiedad.direccion }}</h5>
-                <p class="card-text">
-                    <strong>Región:</strong> {{ propiedad.region.nombre }}<br>
-                    <strong>Comuna:</strong> {{ propiedad.comuna.nombre }}<br>
-                    <strong>Precio:</strong> {{ propiedad.precio }}<br>
-                    <strong>Disponible:</strong> {{ propiedad.disponible }}
-                </p>
-                {% if user.is_authenticated %}
-                <a href="{% url 'editar_inmueble' propiedad.id %}" class="btn btn-warning">Editar</a>
-                <a href="{% url 'borrar_inmueble' propiedad.id %}" class="btn btn-danger">Borrar</a>
-                {% endif %}
+  .card {
+    border: 2px solid #77B1A9;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #270A33;
+  }
+
+  .card-text {
+    font-size: 1rem;
+    color: #3D7B80;
+  }
+
+  .card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    background-color: #B1E6D1;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+  }
+
+  .btn-warning {
+    background-color: #ffc107;
+    border: none;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    border: none;
+  }
+
+  .form-inline {
+    justify-content: center;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-control {
+    background-color: #B1E6D1;
+  }
+
+  .form-control::placeholder {
+    color: #6c757d;
+  }
+
+  .btn-lg {
+    font-size: 1.1em;
+    padding: 15px 30px;
+  }
+
+  .btn-block {
+    display: block;
+    width: 100%;
+  }
+
+  .mt-5 {
+    margin-top: 3rem !important;
+  }
+
+  .mt-4 {
+    margin-top: 1.5rem !important;
+  }
+
+  .mb-4 {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .mb-5 {
+    margin-bottom: 3rem !important;
+  }
+
+  .text-center {
+    text-align: center !important;
+  }
+
+  .img-fixed-size {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+</style>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Lista de Propiedades</h2>
+    <form method="GET" class="mb-4">
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-4">
+                <label for="region" class="font-weight-bold">Regiones:</label>
+                <select name="region" id="region" class="form-control">
+                    <option value="0">Todas</option>
+                    {% for region in regiones %}
+                    <option value="{{ region.id }}" {% if selected_region == region.id %}selected{% endif %}>{{ region.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="comuna" class="font-weight-bold">Comunas:</label>
+                <select name="comuna" id="comuna" class="form-control">
+                    <option value="0">Todas</option>
+                    {% for comuna in comunas %}
+                    <option value="{{ comuna.id }}" {% if selected_comuna == comuna.id %}selected{% endif %}>{{ comuna.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-info btn-block btn-block">Filtrar</button>
             </div>
         </div>
+    </form>
+
+    <div class="row">
+        {% for propiedad in propiedades %}
+        <div class="col-md-4 d-flex align-items-stretch">
+            <div class="card mb-4 w-100">
+                {% if propiedad.imagen %}
+                <img src="{{ propiedad.imagen.url }}" class="card-img-top img-fixed-size" alt="Imagen de la propiedad">
+                {% else %}
+                <img src="{% static 'images/default.jpg' %}" class="card-img-top img-fixed-size" alt="Imagen de la propiedad">
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ propiedad.direccion }}</h5>
+                    <p class="card-text flex-grow-1">
+                        <strong>Región:</strong> {{ propiedad.region.nombre }}<br>
+                        <strong>Comuna:</strong> {{ propiedad.comuna.nombre }}<br>
+                        <strong>Precio:</strong> {{ propiedad.precio }}<br>
+                        <strong>Disponible:</strong> {{ propiedad.disponible }}
+                    </p>
+                    {% if user.is_authenticated %}
+                    <div class="d-flex justify-content-around">
+                        <a href="{% url 'editar_inmueble' propiedad.id %}" class="btn btn-warning">Editar</a>
+                        <a href="{% url 'borrar_inmueble' propiedad.id %}" class="btn btn-danger">Borrar</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const regionSelect = document.getElementById('region');
+    const comunaSelect = document.getElementById('comuna');
+    const initialRegion = regionSelect.value;
+    const initialComuna = "{{ request.GET.comuna|default:'0' }}";
+
+    const fetchComunas = (regionId, selectedComuna = '0') => {
+      fetch(`/get-comunas/${regionId}/`)
+        .then(response => response.json())
+        .then(data => {
+          comunaSelect.innerHTML = '<option value="0">Todas</option>';
+          data.comunas.forEach(comuna => {
+            const option = document.createElement('option');
+            option.value = comuna.id;
+            option.textContent = comuna.nombre;
+            if (comuna.id == selectedComuna) {
+              option.selected = true;
+            }
+            comunaSelect.appendChild(option);
+          });
+        });
+    };
+
+    if (initialRegion !== '0') {
+      fetchComunas(initialRegion, initialComuna);
+    }
+
+    regionSelect.addEventListener('change', function() {
+      const regionId = this.value;
+      fetchComunas(regionId);
+    });
+  });
+</script>
+
 {% endblock %}

@@ -10,17 +10,18 @@ def index(request):
     return render(request, 'index.html')
 
 def lista_propiedades(request):
-    region_id = request.GET.get('region')
-    comuna_id = request.GET.get('comuna')
+    region_id = request.GET.get('region', '0')
+    comuna_id = request.GET.get('comuna', '0')
+    
     propiedades = Propiedad.objects.all()
-
-    if region_id:
+    
+    if region_id != '0':
         propiedades = propiedades.filter(comuna__region_id=region_id)
         comunas = Comuna.objects.filter(region_id=region_id)
     else:
         comunas = Comuna.objects.all()
-
-    if comuna_id:
+    
+    if comuna_id != '0':
         propiedades = propiedades.filter(comuna_id=comuna_id)
 
     regiones = Region.objects.all()
@@ -29,8 +30,8 @@ def lista_propiedades(request):
         'propiedades': propiedades,
         'regiones': regiones,
         'comunas': comunas,
-        'selected_region': int(region_id) if region_id else None,
-        'selected_comuna': int(comuna_id) if comuna_id else None,
+        'selected_region': int(region_id) if region_id != '0' else None,
+        'selected_comuna': int(comuna_id) if comuna_id != '0' else None,
     })
 
 def registro(request):

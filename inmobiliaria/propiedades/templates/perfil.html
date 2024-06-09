@@ -1,24 +1,88 @@
 {% extends "base_generic.html" %}
 
+{% block title %}Perfil{% endblock %}
+
 {% block content %}
+
+<style>
+  /* Fondo celeste */
+  body {
+    background-color: #E6F7F1;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  /* Estilos para la tarjeta */
+  .card {
+    border: 2px solid #77B1A9; /* Borde interactivo */
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: #B1E6D1; /* Fondo de la tarjeta */
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-header {
+    background-color: #77B1A9;
+    color: white;
+    text-align: center;
+    padding: 10px; /* Reducir el padding */
+    border-bottom: 2px solid #3D7B80;
+  }
+
+  .card-header h2 {
+    margin: 0;
+    font-size: 1.5em; /* Ajustar tamaño del texto */
+  }
+
+  .card-body {
+    padding: 15px; /* Reducir el padding */
+  }
+
+  .card-body p {
+    font-size: 1em; /* Reducir tamaño del texto */
+    color: #270A33; /* Color del texto */
+    border: 1px solid #77B1A9;
+    border-radius: 5px;
+    padding: 8px; /* Reducir el padding */
+    margin-bottom: 10px; /* Reducir el margen inferior */
+    background-color: #E6F7F1;
+  }
+
+  .btn-primary {
+    background-color: #3D7B80;
+    border: none;
+    padding: 8px 15px; /* Reducir el padding */
+    font-size: 1em; /* Reducir tamaño del texto */
+  }
+
+  .btn-primary:hover {
+    background-color: #77B1A9;
+  }
+</style>
+
 <div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header text-center">
-          <h2>Perfil</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6"> <!-- Reducir el ancho de la columna -->
+            <div class="card">
+                <div class="card-header text-center">
+                    <h2>Perfil</h2>
+                </div>
+                <div class="card-body">
+                    <p><strong>Nombre de usuario:</strong> {{ user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Nombre:</strong> {{ user.first_name }}</p>
+                    <p><strong>Apellido:</strong> {{ user.last_name }}</p>
+                    <div class="text-center">
+                        <a href="{% url 'editar_perfil' %}" class="btn btn-primary">Editar Perfil</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <p><strong>Nombre de usuario:</strong> {{ user.username }}</p>
-          <p><strong>Email:</strong> {{ user.email }}</p>
-          <p><strong>Nombre:</strong> {{ user.first_name }}</p>
-          <p><strong>Apellido:</strong> {{ user.last_name }}</p>
-        </div>
-        <div class="card-footer text-center">
-          <a href="{% url 'editar_perfil' %}" class="btn btn-primary">Editar Perfil</a>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
+
 {% endblock %}

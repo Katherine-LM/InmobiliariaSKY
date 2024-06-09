@@ -3,10 +3,103 @@
 {% block title %}Registro{% endblock %}
 
 {% block content %}
-  <h2>Registro</h2>
+
+<style>
+  /* Fondo celeste */
+  body {
+    background-color: #E6F7F1;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding: 20px 0;
+  }
+
+  /* Borde y centrado del formulario */
+  form {
+    background-color: #B1E6D1; /* Fondo del formulario */
+    border: 2px solid #77B1A9; /* Borde del formulario */
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 400px; /* Hacer el formulario más compacto */
+    width: 100%;
+  }
+
+  h2 {
+    text-align: center;
+    color: #270A33; /* Color del título */
+    margin-bottom: 15px;
+    font-size: 1.5em;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+
+  label, .form-control {
+    font-size: 1em;
+    color: #270A33; /* Color de los labels */
+    margin-bottom: 5px;
+  }
+
+  .form-control {
+    background-color: #E6F7F1;
+    border: 1px solid #77B1A9;
+    color: #270A33;
+    height: 36px;
+    padding: 5px 10px;
+    width: 100%;
+  }
+
+  .btn-primary {
+    background-color: #3D7B80;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    margin-top: 5px;
+  }
+
+  .btn-primary:hover {
+    background-color: #77B1A9;
+  }
+
+  .form-control::placeholder {
+    color: #6c757d;
+  }
+</style>
+
+<div class="content-wrapper">
   <form method="post">
+    <h2>Registro</h2>
     {% csrf_token %}
-    {{ form.as_p }}
+    <div class="form-group">
+      <label for="username">Nombre de usuario:</label>
+      {{ form.username }}
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      {{ form.email }}
+    </div>
+    <div class="form-group">
+      <label for="password1">Contraseña:</label>
+      {{ form.password1 }}
+    </div>
+    <div class="form-group">
+      <label for="password2">Confirmar contraseña:</label>
+      {{ form.password2 }}
+    </div>
     <button type="submit" class="btn btn-primary">Registrarse</button>
   </form>
+</div>
+
 {% endblock %}

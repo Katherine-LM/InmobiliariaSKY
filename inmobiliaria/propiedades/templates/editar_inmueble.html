@@ -1,17 +1,127 @@
-{% load static %}
+{% extends "base_generic.html" %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Editar Inmueble</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-</head>
-<body>
+{% block title %}Editar Inmueble{% endblock %}
+
+{% block content %}
+<style>
+  .edit-property-form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding: 20px 0;
+  }
+
+  .edit-property-form {
+    background-color: #B1E6D1;
+    border: 2px solid #77B1A9;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .edit-property-form h1 {
+    text-align: center;
+    color: #270A33;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+  }
+
+  .edit-property-form .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .edit-property-form-label {
+    font-size: 1em;
+    color: #270A33;
+    margin-bottom: 5px;
+  }
+
+  .edit-property-form-control {
+    background-color: #E6F7F1;
+    border: 1px solid #77B1A9;
+    color: #270A33;
+    height: 36px;
+    padding: 5px 10px;
+    width: 100%;
+  }
+
+  .edit-property-form .btn-primary {
+    background-color: #3D7B80;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    margin-top: 5px;
+  }
+
+  .edit-property-form .btn-primary:hover {
+    background-color: #77B1A9;
+  }
+
+  .edit-property-form .form-control::placeholder {
+    color: #6c757d;
+  }
+</style>
+
+{% load form_tags %}
+
+<div class="container edit-property-form-wrapper">
+  <div class="col-md-8 offset-md-2">
     <h1>Editar Inmueble</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    <form method="post" enctype="multipart/form-data" class="edit-property-form">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="id_direccion" class="edit-property-form-label">Dirección:</label>
+        {{ form.direccion|add_class:"edit-property-form-control" }}
+      </div>
+      <div class="form-group">
+        <label for="id_region" class="edit-property-form-label">Región:</label>
+        {{ form.region|add_class:"edit-property-form-control" }}
+      </div>
+      <div class="form-group">
+        <label for="id_comuna" class="edit-property-form-label">Comuna:</label>
+        {{ form.comuna|add_class:"edit-property-form-control" }}
+      </div>
+      <div class="form-group">
+        <label for="id_precio" class="edit-property-form-label">Precio:</label>
+        {{ form.precio|add_class:"edit-property-form-control" }}
+      </div>
+      <div class="form-group">
+        <label for="id_disponible" class="edit-property-form-label">Disponible:</label>
+        {{ form.disponible|add_class:"edit-property-form-control" }}
+      </div>
+      <div class="form-group">
+        <label for="id_imagen" class="edit-property-form-label">Imagen:</label>
+        {{ form.imagen|add_class:"edit-property-form-control" }}
+      </div>
+      <button type="submit" class="btn btn-primary edit-property-form-button">Guardar Cambios</button>
     </form>
-</body>
-</html>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const regionSelect = document.getElementById('id_region');
+    const comunaSelect = document.getElementById('id_comuna');
+
+    regionSelect.addEventListener('change', function() {
+      const regionId = this.value;
+
+      fetch(`/get-comunas/${regionId}/`)
+        .then(response => response.json())
+        .then(data => {
+          comunaSelect.innerHTML = '<option value="">---------</option>'; // Clear previous options
+          data.comunas.forEach(comuna => {
+            const option = document.createElement('option');
+            option.value = comuna.id;
+            option.textContent = comuna.nombre;
+            comunaSelect.appendChild(option);
+          });
+        });
+    });
+  });
+</script>
+
+{% endblock %}

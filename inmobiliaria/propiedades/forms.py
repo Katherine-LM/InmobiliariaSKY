@@ -4,6 +4,13 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Propiedad, Region, Comuna
 
 class RegistroForm(UserCreationForm):
+    email = forms.EmailField(
+        required=True,
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Ingrese su correo electrónico'
+        })
+    )
     password1 = forms.CharField(
         label="Password",
         widget=forms.PasswordInput(attrs={
@@ -25,7 +32,7 @@ class RegistroForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2']
         widgets = {
             'username': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -44,8 +51,6 @@ class EditarPerfilForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'first_name', 'last_name']
-
-
 
 class PropiedadForm(forms.ModelForm):
     region = forms.ModelChoiceField(queryset=Region.objects.all(), required=True, label="Región")

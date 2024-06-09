@@ -3,57 +3,123 @@
 {% block title %}Agregar Nuevo Inmueble{% endblock %}
 
 {% block content %}
-  <h1>Agregar Nuevo Inmueble</h1>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="form-group">
-      <label for="id_direccion">Dirección:</label>
-      {{ form.direccion }}
-    </div>
-    <div class="form-group">
-      <label for="id_region">Región:</label>
-      {{ form.region }}
-    </div>
-    <div class="form-group">
-      <label for="id_comuna">Comuna:</label>
-      {{ form.comuna }}
-    </div>
-    <div class="form-group">
-      <label for="id_precio">Precio:</label>
-      {{ form.precio }}
-    </div>
-    <div class="form-group">
-      <label for="id_disponible">Disponible:</label>
-      {{ form.disponible }}
-    </div>
-    <div class="form-group">
-      <label for="id_imagen">Imagen:</label>
-      {{ form.imagen }}
-    </div>
-    <button type="submit" class="btn btn-primary">Agregar Inmueble</button>
-  </form>
+<style>
+  .add-property-form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding: 20px 0;
+  }
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const regionSelect = document.getElementById('id_region');
-      const comunaSelect = document.getElementById('id_comuna');
-  
-      regionSelect.addEventListener('change', function() {
-        const regionId = this.value;
-  
-        fetch(`/get-comunas/${regionId}/`)
-          .then(response => response.json())
-          .then(data => {
-            comunaSelect.innerHTML = '<option value="">---------</option>'; // Clear previous options
-            data.comunas.forEach(comuna => {
-              const option = document.createElement('option');
-              option.value = comuna.id;
-              option.textContent = comuna.nombre;
-              comunaSelect.appendChild(option);
-            });
+  .add-property-form {
+    background-color: #B1E6D1;
+    border: 2px solid #77B1A9;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .add-property-form h1 {
+    text-align: center;
+    color: #270A33;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+  }
+
+  .add-property-form .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .add-property-form label {
+    font-size: 1em;
+    color: #270A33;
+    margin-bottom: 5px;
+  }
+
+  .add-property-form .form-control {
+    background-color: #E6F7F1;
+    border: 1px solid #77B1A9;
+    color: #270A33;
+    height: 36px;
+    padding: 5px 10px;
+    width: 100%;
+  }
+
+  .add-property-form .btn-primary {
+    background-color: #3D7B80;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    margin-top: 5px;
+  }
+
+  .add-property-form .btn-primary:hover {
+    background-color: #77B1A9;
+  }
+
+  .add-property-form .form-control::placeholder {
+    color: #6c757d;
+  }
+</style>
+
+<div class="container add-property-form-wrapper">
+  <div class="col-md-8 offset-md-2">
+    <h2>Agregar nuevo inmueble</h2>
+    <form method="post" enctype="multipart/form-data" class="add-property-form">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="id_direccion">Dirección:</label>
+        {{ form.direccion }}
+      </div>
+      <div class="form-group">
+        <label for="id_region">Región:</label>
+        {{ form.region }}
+      </div>
+      <div class="form-group">
+        <label for="id_comuna">Comuna:</label>
+        {{ form.comuna }}
+      </div>
+      <div class="form-group">
+        <label for="id_precio">Precio:</label>
+        {{ form.precio }}
+      </div>
+      <div class="form-group">
+        <label for="id_disponible">Disponible:</label>
+        {{ form.disponible }}
+      </div>
+      <div class="form-group">
+        <label for="id_imagen">Imagen:</label>
+        {{ form.imagen }}
+      </div>
+      <button type="submit" class="btn btn-primary">Agregar Inmueble</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const regionSelect = document.getElementById('id_region');
+    const comunaSelect = document.getElementById('id_comuna');
+
+    regionSelect.addEventListener('change', function() {
+      const regionId = this.value;
+
+      fetch(`/get-comunas/${regionId}/`)
+        .then(response => response.json())
+        .then(data => {
+          comunaSelect.innerHTML = '<option value="">---------</option>'; // Clear previous options
+          data.comunas.forEach(comuna => {
+            const option = document.createElement('option');
+            option.value = comuna.id;
+            option.textContent = comuna.nombre;
+            comunaSelect.appendChild(option);
           });
-      });
+        });
     });
-  </script>
-  
+  });
+</script>
+
 {% endblock %}
